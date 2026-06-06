@@ -62,7 +62,7 @@ python train.py                  # KFold + LightGBM(RMSPE) → output/submission
 # 或一键：bash run_all.sh
 ```
 
-##六、 实际结果（2026-06，全量数据）
+## 六、 实际结果（2026-06，全量数据）
 
 - **私榜 RMSPE = 0.23619**（真实提交分数；本赛**冠军 ≈ 0.196**，3809 队）。
 - 本地 **5 折 CV RMSPE = 0.21623**（各折 0.2131–0.2188，非常稳定）；428,932 行、91 个特征、LightGBM。
