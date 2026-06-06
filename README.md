@@ -1,7 +1,6 @@
-# Optiver - Realized Volatility Prediction (QR 作品集 #2)
+# Optiver - Realized Volatility Prediction
 
-> 第二个 QR 作品集，和 [drw-crypto](../drw-crypto/) 互补：DRW 是**加密资产收益预测**，
-> 这个是**股票已实现波动率预测**——两大核心 QR 任务都覆盖。
+> 量化研究(QR)作品集：股票**已实现波动率预测**——做市与期权定价的核心任务。
 > 赛页：https://www.kaggle.com/competitions/optiver-realized-volatility-prediction
 > 主办方 **Optiver**（全球顶级做市商）。
 
@@ -67,8 +66,8 @@ python train.py                  # KFold + LightGBM(RMSPE) → output/submission
 
 > **Optiver Realized Volatility Prediction（Kaggle，Optiver 主办）** — 从股票订单簿/逐笔成交
 > 构建已实现波动率预测模型；WAP 对数收益、子窗口已实现波动率、挂单/成交失衡等微观结构特征
-> + 跨股票/跨时刻聚合；LightGBM 直接优化 RMSPE，KFold 验证。与 DRW 加密收益预测互补，
-> 覆盖"波动率建模 + 收益预测"两类核心 QR 任务。
+> + 跨股票/跨时刻聚合；LightGBM 直接优化 RMSPE，KFold 验证；以自包含 Kaggle kernel 完成 code 赛提交，
+> 私榜 RMSPE 0.236（冠军 0.196，3809 队）。
 
 ## 实际结果（2026-06，全量数据）
 
@@ -81,6 +80,10 @@ CSV 无法得到真实分数。改为把整条流水线打包成自包含 Kaggle
 `kaggle kernels push` 在线运行 → `kaggle competitions submit -k <kernel> -v <ver> -f submission.csv`，
 由 Kaggle 在**完整隐藏 test** 上重跑打分 → 私榜 0.23619。
 
-## 七、与 DRW 的差异（面试谈资）
-- DRW 是**扁平表格 + 匿名信号**；这个是**多表、原始订单簿**，要自己从微观结构造特征——更能体现你懂市场。
-- DRW 用**时序稳定性**选特征(数据按时间排);这里 time_id **乱序**，改用 KFold——说明你会**按数据性质选验证方案**。
+## 七、面试谈资
+
+- **多表、原始订单簿**：要自己从微观结构(WAP、已实现波动率、挂单/成交失衡)造特征，而非套用现成信号——更能体现懂市场。
+- **time_id 乱序匿名** → 用 KFold 而非时序 CV：体现会**按数据性质选验证方案**。
+- **直接优化 RMSPE**：用 `1/y²` 样本权重把加权 MSE 等价成 RMSPE，而不是只压普通 MSE。
+- **子窗口特征**：窗口后半段(seconds≥150/300/450)的已实现波动率最能预测下一窗口——基于市场直觉的特征设计。
+- **code 赛提交全链路**：打包自包含 kernel → API 推送在线运行 → Kaggle 在隐藏 test 重跑出分。
