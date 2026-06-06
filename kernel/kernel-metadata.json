@@ -1,0 +1,13 @@
+{
+  "id": "caixin030703/optiver-rv-submit",
+  "title": "Optiver RV Submit",
+  "code_file": "optiver_submit.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": false,
+  "enable_internet": false,
+  "competition_sources": ["optiver-realized-volatility-prediction"],
+  "dataset_sources": [],
+  "kernel_sources": []
+}

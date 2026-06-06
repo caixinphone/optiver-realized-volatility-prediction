@@ -70,12 +70,16 @@ python train.py                  # KFold + LightGBM(RMSPE) → output/submission
 > + 跨股票/跨时刻聚合；LightGBM 直接优化 RMSPE，KFold 验证。与 DRW 加密收益预测互补，
 > 覆盖"波动率建模 + 收益预测"两类核心 QR 任务。
 
-## 实际结果（2026-06-06，全量官方训练数据）
+## 实际结果（2026-06，全量数据）
 
-- **5 折 CV RMSPE = 0.21623**（各折 0.2131–0.2188，非常稳定），428,932 行、91 个特征、LightGBM(1408 棵树)。
-- 参照：本赛**冠军私榜 ≈ 0.20**；单模型 LightGBM + 手工订单簿特征做到 **0.216 属于扎实的单模型水平**。
-- ⚠️ **这是 code competition**：`test.csv` 只有 3 行占位，真实 test 集隐藏。**CSV 提交无法得到真实私榜分**——
-  要拿榜单分数必须提交在 Kaggle 上重跑的 notebook。因此本项目的**可引用成果 = 上述 CV RMSPE**（code 赛作品集的标准报告方式）。
+- **私榜 RMSPE = 0.23619**（真实提交分数；本赛**冠军 ≈ 0.196**，3809 队）。
+- 本地 **5 折 CV RMSPE = 0.21623**（各折 0.2131–0.2188，非常稳定）；428,932 行、91 个特征、LightGBM。
+- CV 0.216 → 私榜 0.236 的差距 = 正常的 CV 乐观偏差；单模型基线做到 0.236 属扎实中游。
+
+**提交方式（code competition 的正规流程,已全程跑通)**：`test.csv` 只有 3 行占位、真实 test 隐藏，
+CSV 无法得到真实分数。改为把整条流水线打包成自包含 Kaggle kernel（[kernel/optiver_submit.py](kernel/optiver_submit.py)）→
+`kaggle kernels push` 在线运行 → `kaggle competitions submit -k <kernel> -v <ver> -f submission.csv`，
+由 Kaggle 在**完整隐藏 test** 上重跑打分 → 私榜 0.23619。
 
 ## 七、与 DRW 的差异（面试谈资）
 - DRW 是**扁平表格 + 匿名信号**；这个是**多表、原始订单簿**，要自己从微观结构造特征——更能体现你懂市场。
