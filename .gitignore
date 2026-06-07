@@ -5,3 +5,6 @@ __pycache__/
 kernel_out/
 *publicleaderboard*.csv
 *.zip
+
+kernel_out_v2/
+.kpoll/
