@@ -1,8 +1,8 @@
-"""Run the MLP (stock-embedding) CV on V2 features; save OOF aligned to the GBM folds.
+"""Run the MLP (stock-embedding) CV; save OOF aligned to the GBM folds for blending.
 
-Same KFold(5, shuffle, seed=42) split as train_v2.py so OOF arrays line up for blending.
-  python train_nn_v2.py                 # full, default epochs
-  python train_nn_v2.py --epochs 25     # faster pass (CPU)
+Uses the same fold split as train.py so the OOF arrays line up.
+  python train_nn.py --cv group         # honest GroupKFold
+  python train_nn.py --epochs 25        # faster pass
 """
 from __future__ import annotations
 
@@ -55,7 +55,7 @@ def main(args):
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
-    ap.add_argument("--feats", default="train_features_v2.parquet")
+    ap.add_argument("--feats", default="train_features.parquet")
     ap.add_argument("--cv", choices=["kfold", "group"], default="kfold")
     ap.add_argument("--epochs", type=int, default=60)
     ap.add_argument("--folds", type=int, default=0, help="limit #folds for a quick probe (0=all)")

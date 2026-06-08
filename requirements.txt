@@ -3,5 +3,7 @@ pandas
 pyarrow
 scikit-learn
 lightgbm
+catboost
+torch
 tqdm
 kaggle
